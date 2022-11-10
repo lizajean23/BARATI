@@ -7,6 +7,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.core.text.isDigitsOnly
 import java.time.Year
 
 class MainActivity : AppCompatActivity() {
@@ -31,23 +32,32 @@ class MainActivity : AppCompatActivity() {
         checkBox = findViewById(R.id.checkBox)
 
         button.setOnClickListener{
-            if (cardNumber.length() != 16){
+            if (cardNumber.length() != 16 || !cardNumber.text.toString().isDigitsOnly()){
                 cardNumber.error = "შეიყვანეთ სწორი მონაცემი"
                 return@setOnClickListener
             }
-            if(cvc.length() !=3 ){
+            else if(cvc.length() !=3 || !cvc.text.toString().isDigitsOnly()){
                 cvc.error = "შეიყვანეთ სწორი მონაცემი"
                 return@setOnClickListener
             }
-            if (month.text.toString().toInt() > 12 || month.text.toString().toInt() < 1){
+            else if (month.text.toString().isEmpty() || !month.text.toString().isDigitsOnly()){
+                month.error = "ველი ცარიელია"
+                return@setOnClickListener
+            }
+            else if (month.text.toString().toInt() > 12 || month.text.toString().toInt() < 1 ){
                 month.error = "შეიყვანეთ სწორი მონაცემი"
                 return@setOnClickListener
             }
-            if(year.text.toString().toInt() > 100 || year.text.toString().toInt() < 23){
+            else if (year.text.toString().isEmpty() || !year.text.toString().isDigitsOnly()){
+                year.error = "ველი ცარიელია"
+                return@setOnClickListener
+
+            }
+            else if(year.text.toString().toInt() > 100 || year.text.toString().toInt() < 23 ){
                 year.error = "შეოყვანეთ სწორი მონაცემი"
                 return@setOnClickListener
             }
-            if (!(checkBox.isChecked)){
+            else if (!(checkBox.isChecked)){
                 checkBox.error = "გთხოვთ მონიშნოთ ველი"
                 return@setOnClickListener
             }
